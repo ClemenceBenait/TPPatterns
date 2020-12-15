@@ -10,6 +10,7 @@ import java.awt.Point;
 
 
 public abstract class Shape {
+        abstract public void accept(DrawingVisitor v);
 	private boolean iAmSelected = false;
 	/**
 	 * Is this shape selected ?
@@ -46,4 +47,6 @@ public abstract class Shape {
 	 * @return true if <code>p</code> inside the shape, false otherwise
 	 */
 	abstract public boolean isPickedBy(Point p);
+        
+ 
 }

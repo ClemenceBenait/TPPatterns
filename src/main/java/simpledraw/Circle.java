@@ -44,4 +44,8 @@ public class Circle
 	public boolean isPickedBy(Point p) {
 		return (Math.abs(myCenter.distance(p) - myRadius) <= 2);
 	}
+
+        public void accept(DrawingVisitor v) {
+		v.visit(this);
+	}
 }

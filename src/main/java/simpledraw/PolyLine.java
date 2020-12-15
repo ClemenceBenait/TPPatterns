@@ -68,6 +68,10 @@ public class PolyLine
 
 		return result;
 	}
+        
+        public void accept(DrawingVisitor v) {
+		v.visit(this);
+	}
 
 
 
