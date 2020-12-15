@@ -1,8 +1,13 @@
 package simpledraw;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.JPanel;
 
 /**
@@ -14,10 +19,11 @@ import javax.swing.JPanel;
  * @see simpledraw.DrawingTool
  */
 
-public class DrawingPanel
-	extends JPanel {
+public class DrawingPanel extends JPanel {
+	static final long serialVersionUID = 1L;
 	DrawingTool myCurrentTool;
 	Drawing myDrawing = new Drawing();
+	private final Set<Shape> mySelectedShapes = new HashSet<Shape>();
 
 	public DrawingPanel() {
 		super();
@@ -47,7 +53,31 @@ public class DrawingPanel
 		myDrawing.clearSelection();
 		repaint();
 	}
+	
+	public boolean isSelected(Shape s) {
+	   return mySelectedShapes.contains(s);
+	}
+	
+	 public Drawing getDrawing() {
+	        return this.myDrawing;
+	    }
+	
+	 public void clearSelection() {
+	        mySelectedShapes.clear();
+	        repaint();
+	    }
 
+	 public void selectShape(Shape s) {
+	        mySelectedShapes.add(s);
+	        repaint();
+	    }
+	
+	 public void addShape(Shape s) {
+	        clearSelection();
+	        myDrawing.addShape(s);
+	        selectShape(s);
+	    }
+	 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
@@ -55,10 +85,24 @@ public class DrawingPanel
 			RenderingHints(RenderingHints.KEY_ANTIALIASING,
 				       RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHints(qualityHints);
-		myDrawing.draw(g2);
-		myCurrentTool.draw(g2);
+		myDrawing.accept(
+	            new ShapeVisitor() {
+	                @Override
+	                public void visit(Line l) {
+	                        l.draw(g2);
+	                }
+	                @Override
+	                public void visit(Circle c) {
+	                        c.draw(g2);
+	                }
+	                @Override
+	                public void visit(PolyLine p) {
+	                        p.draw(g2);
+	                }
+	            });
+	        myCurrentTool.draw((Graphics2D) g);
 	}
-        
+	
         private void terminate(DrawingTool t) {
             removeKeyListener(t);
             removeMouseListener(t);
@@ -70,5 +114,5 @@ public class DrawingPanel
             addMouseListener(t);
             addMouseMotionListener(t);
         }
-
+     
 }

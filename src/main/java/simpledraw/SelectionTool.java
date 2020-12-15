@@ -15,7 +15,6 @@ import java.awt.event.MouseEvent;
 
 public class SelectionTool
 	extends DrawingTool {
-	private Shape mySelectedShape = null;
 	private Point myLastPoint;
 
 	public SelectionTool(DrawingPanel panel) {
@@ -24,26 +23,19 @@ public class SelectionTool
 
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyChar() == KeyEvent.VK_DELETE) {
-			if (mySelectedShape != null) {
-				myDrawing.deleteShape(mySelectedShape);
-				myPanel.repaint();
-			}
+				myDrawing.clearSelection();
 		}
 	}
 
 	public void mousePressed(MouseEvent e) {
-		Shape pickedShape = myDrawing.pickShapeAt(e.getPoint());
+		Shape selectedShape = myPanel.getDrawing().pickShapeAt(e.getPoint());
 		myLastPoint = e.getPoint();
-		if (mySelectedShape != null) {
-			mySelectedShape.setSelected(false);
+		if (selectedShape != null) {
+			myPanel.selectShape(selectedShape);
+            myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+		} else {
+			myPanel.clearSelection();
 		}
-		mySelectedShape = pickedShape;
-		if (mySelectedShape != null) {
-			mySelectedShape.setSelected(true);
-			myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.
-				MOVE_CURSOR));
-		}
-		myPanel.repaint();
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -61,13 +53,14 @@ public class SelectionTool
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		if (mySelectedShape != null) {
-			mySelectedShape.translateBy(
+		Shape selectedShape = myPanel.myDrawing.pickShapeAt(e.getPoint());
+		if (selectedShape != null) {
+			selectedShape.translateBy(
 				e.getX() - myLastPoint.x,
 				e.getY() - myLastPoint.y
 				);
 			myLastPoint = e.getPoint();
-        		myPanel.repaint();
+        	myPanel.repaint();
 		}
 	}
 

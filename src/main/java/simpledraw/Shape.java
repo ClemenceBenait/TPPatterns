@@ -10,7 +10,7 @@ import java.awt.Point;
 
 
 public abstract class Shape {
-        abstract public void accept(DrawingVisitor v);
+    abstract public void accept(ShapeVisitor v);
 	private boolean iAmSelected = false;
 	/**
 	 * Is this shape selected ?

@@ -6,11 +6,20 @@
 
 package simpledraw;
 
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author cleme
  */
-public class XMLPrinter implements DrawingVisitor {
+public class XMLPrinter implements ShapeVisitor {
+	
+	private final Drawing myDrawing;
+  
+    public XMLPrinter(Drawing d) {
+    	myDrawing = d;
+    }
+    
     @Override
 	public void visit(Circle c) {
 		System.out.println(c);

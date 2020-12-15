@@ -30,15 +30,13 @@ public class CircleTool
 			myPanel.setCursor(
 				Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR)
 				);
-			myPanel.repaint();
 		} else {
 			// Radius
 			iAmActive = false;
-			myDrawing.addShape(
+			myPanel.addShape(
 				new Circle(myCenter, myRadius)
 				);
 			myPanel.setCursor(Cursor.getDefaultCursor());
-			myPanel.repaint();
 		}
 	}
 

@@ -24,6 +24,7 @@ public class MainFrame
 	JToggleButton myLineButton = new JToggleButton("Line");
 	JToggleButton myCircleButton = new JToggleButton("Circle");
 	DrawingPanel myDrawingPanel = new DrawingPanel();
+	Drawing myDrawing = new Drawing();
 
 	/**Construct the frame*/
 	public MainFrame() {

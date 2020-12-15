@@ -45,7 +45,7 @@ public class Circle
 		return (Math.abs(myCenter.distance(p) - myRadius) <= 2);
 	}
 
-        public void accept(DrawingVisitor v) {
+        public void accept(ShapeVisitor v) {
 		v.visit(this);
 	}
 }

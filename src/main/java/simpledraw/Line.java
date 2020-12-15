@@ -73,7 +73,7 @@ public class Line
 		return (distance <= 2) && (lambda >= 0) && (lambda <= 1);
 	}
 
-         public void accept(DrawingVisitor v) {
+         public void accept(ShapeVisitor v) {
 		v.visit(this);
 	}
 }

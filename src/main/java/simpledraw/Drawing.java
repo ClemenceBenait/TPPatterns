@@ -17,6 +17,7 @@ public class Drawing {
 	 * A drawing is a collection of shapes
 	 */
 	private List<Shape> myShapes = new LinkedList<Shape>();
+	private final List<DrawingView> myViews = new LinkedList<DrawingView> ();
 
 	public Drawing() {
 	}
@@ -28,6 +29,10 @@ public class Drawing {
 	public void draw(Graphics2D g) {
 		for(Shape s : myShapes)
 			s.draw(g);
+	}
+	
+	public void addDrawingView(DrawingView drawingview) {
+		myViews.add(drawingview);
 	}
 
 	/**
@@ -67,5 +72,11 @@ public class Drawing {
 	public void clearSelection() {
 		for (Shape s : myShapes)
 			s.setSelected(false);
+	}
+	
+	public void accept(ShapeVisitor v) {
+		 for(Shape s : myShapes) {
+             s.accept(v);
+         }
 	}
 }

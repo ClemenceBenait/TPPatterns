@@ -69,7 +69,7 @@ public class PolyLine
 		return result;
 	}
         
-        public void accept(DrawingVisitor v) {
+        public void accept(ShapeVisitor v) {
 		v.visit(this);
 	}
 
